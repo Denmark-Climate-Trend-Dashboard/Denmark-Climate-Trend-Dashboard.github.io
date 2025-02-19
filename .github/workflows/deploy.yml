@@ -3,10 +3,10 @@ name: Deploy Dash App to GitHub Pages
 on:
   push:
     branches:
-      - main  # Adjust if needed
+      - main  # Change to your default branch if needed
 
 permissions:
-  contents: write 
+  contents: write  # This is crucial for pushing to `gh-pages`
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
         run: |
           docker build -t my-dash-app .
           docker run -d -p 80:80 --name dash-container my-dash-app
-          sleep 10  # Give the server time to start
+          sleep 10  # Give it time to start
 
       - name: Install Dependencies
         run: |
@@ -32,7 +32,7 @@ jobs:
       - name: Fetch Static Files
         run: |
           mkdir output
-          wget -r -np -nH --cut-dirs=1 -P output http://localhost:80/
+          wget -r -np -nH --cut-dirs=1 -P output http://localhost:8050/
           ls -l output
 
       - name: Deploy to GitHub Pages
@@ -40,4 +40,4 @@ jobs:
         with:
           branch: gh-pages
           folder: output
-          token: GH_PAT
+          token: ${{ secrets.GITHUB_TOKEN }}  # Use built-in GitHub token
