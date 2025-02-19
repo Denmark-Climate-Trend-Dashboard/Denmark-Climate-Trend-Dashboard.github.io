@@ -22,7 +22,7 @@ jobs:
       - name: Build and Run Docker Container
         run: |
           docker build -t my-dash-app .
-          docker run -d -p 8050:8050 --name dash-container my-dash-app
+          docker run -d -p 80:80 --name dash-container my-dash-app
           sleep 10  # Wait for app to be ready
 
       - name: Install wget
@@ -31,7 +31,7 @@ jobs:
       - name: Capture Static Files
         run: |
           mkdir output
-          wget -r -np -nH --cut-dirs=1 -P output http://localhost:8050/
+          wget -r -np -nH --cut-dirs=1 -P output http://localhost:80/
           ls -l output
 
       - name: Deploy to GitHub Pages
