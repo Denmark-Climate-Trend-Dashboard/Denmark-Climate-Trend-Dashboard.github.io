@@ -32,7 +32,7 @@ jobs:
       - name: Fetch Static Files
         run: |
           mkdir output
-          wget -r -np -nH --cut-dirs=1 -P output http://localhost:8050/
+          wget -r -np -nH --cut-dirs=1 -P output http://localhost:80/
           ls -l output
 
       - name: Deploy to GitHub Pages
